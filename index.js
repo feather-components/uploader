@@ -118,8 +118,6 @@ var prototype = {
             self.dom.attr('id', 'ui3-uploader-' + $.now());
         }
 
-        console.log(self.dom.uploadify);
-
         self.dom.uploadify(options);
         //hack uploadify plugin
         //uploadify会重新创建一个同名的dom，所以再次通过jquery获取upload对象时，会为空，所以，直接将值同样赋值给新创建的元素的data中
