@@ -41,9 +41,13 @@ function __uri(url){
     return url;
 }
 
-var prefix = currentScript.replace(/[^\/]+$/, '');
-var swfUrl = __uri('./uploader.swf').split('/').pop();
-console.log(swfUrl, prefix);
+var prefix = '';
+var swfUrl = __uri('./uploader.swf');
+
+if(swfUrl == './uploader.swf'){
+    prefix = currentScript.replace(/[^\/]+$/, '');
+}
+
 window.__featherUiUploaderSwfUrl__ = prefix + swfUrl;
 })();
 
