@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>uploader examples</title>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/class/index.js"></script>
+    <script src="../bower_components/jquery-cookie/jquery.cookie.js"></script>
+    <script src="../lib/uploadify.js"></script>
+    <link rel="stylesheet" type="text/css" href="../index.css" />
+    <script src="../index.js"></script>
+    <style>
+    a{
+        margin: 20px;
+    }
+    </style>
+</head>
+
+<body>
+<div id="uploader-queue"></div>
+<a href="javascript:void(0);" id="uploader">上传</a>
+<script>
+$('#uploader').uploader({
+    uploader: './success.json',
+    queueID: 'uploader-queue',
+    checkQueueExists: true
+}).on('uploader:dialogOpen', function(){
+    alert(12333);
+})
+</script>
+</body>
+</html>
