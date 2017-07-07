@@ -46,30 +46,23 @@ var swfUrl = __uri('./uploader.swf');
 
 if(swfUrl == './uploader.swf'){
     prefix = currentScript.replace(/[^\/]+$/, '');
+}else if(!/^(?:(?:https?:)?\/\/)?[^\/]+/.test(swfUrl)){
+    prefix = (currentScript.match(/^(?:(?:https?:)?\/\/)?[^\/]+/) || [''])[0];
 }
 
 window.__featherUiUploaderSwfUrl__ = prefix + swfUrl;
 })();
 
 ;(function(factory){
-if(typeof define == 'function' && define.amd){
-    //seajs or requirejs environment
-    define(['jquery', 'class', 'jquery.cookie', './lib/uploadify'], factory);
-}else if(typeof module === 'object' && typeof module.exports == 'object'){
-    var Cookie = {};
-
-    try{
-        Cookie = require('jquery.cookie');
-    }catch(e){};
-
+if(typeof module === 'object' && typeof module.exports == 'object'){
     module.exports = factory(
         require('jquery'),
-        require('class'),
-        Cookie,
+        require('../class/class'),
+        require('../cookie/cookie'),
         require('./lib/uploadify')
     );
 }else{
-    factory(window.jQuery, window.jQuery.klass, window.jQuery.cookie, window.jQuery.fn.uploadify);
+    factory(window.jQuery, window.jQuery.klass, window.jQuery.cookie, window.jQuery.fn.uplodify);
 }
 })(function($, Class, Cookie){
 var DATANAME = Class.NAMESPACE + '.uploader';
@@ -95,7 +88,7 @@ var prototype = {
         var self = this, options = self.options;
 
         if(options.fixedCookie){
-            options.formData = $.extend(options.formData || {}, Cookie() || {});
+            options.formData = $.extend(options.formData || {}, Cookie.get() || {});
         }
 
         if(!options.queueID){
@@ -115,7 +108,7 @@ var prototype = {
         });
 
         if(!self.dom.attr('id')){
-            self.dom.attr('id', 'ui3-uploader-' + $.now());
+            self.dom.attr('id', 'ui2-uploader-' + $.now());
         }
 
         self.dom.uploadify(options);
@@ -135,7 +128,7 @@ $.each('cancel destroy disable settings stop upload'.split(' '), function(key, m
 
         if(method == 'destroy'){
             self.dom.removeData(DATANAME);
-            /ui3-uploader-\d+/.test(self.dom.attr('id')) && self.dom.removeAttr('id');
+            /ui2-uploader-\d+/.test(self.dom.attr('id')) && self.dom.removeAttr('id');
             self.dom = null;
             self.uploader.removeData(DATANAME);
             self.uploader = null;
